@@ -1,6 +1,7 @@
 import Form from "next/form";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
+// import Image from "next/image";
 
 type Format = "redraft" | "dynasty";
 type PPR = "0" | "0.5" | "1";
@@ -19,6 +20,7 @@ interface Player {
   overallRank: number;
   positionRank: number;
   value: number;
+  headshot: { src: string; alt: string };
 }
 
 function deserializePlayer(message: any): Player {
@@ -29,6 +31,10 @@ function deserializePlayer(message: any): Player {
     overallRank: message.overallRank,
     positionRank: message.positionRank,
     value: message.value,
+    headshot: {
+      src: `https://a.espncdn.com/i/headshots/nfl/players/full/${message.player.espnId}.png`,
+      alt: message.player.name,
+    },
   };
 }
 
@@ -54,14 +60,15 @@ async function getPlayers({
 
   const response = await fetch(`${REQUEST_URL}?${urlSearchParams}`);
   const data = await response.json();
-  console.log(data[0]);
   return data.map((r: any) => deserializePlayer(r));
 }
 
 export default async function Page({ searchParams }: IProps) {
-  const { format, ppr, pids } = await searchParams;
+  const { format = "dynasty", ppr = "0", pids } = await searchParams;
 
-  const getCachedPlayers = unstable_cache(getPlayers, [format, ppr]);
+  const getCachedPlayers = unstable_cache(getPlayers, [format, ppr], {
+    revalidate: 60 * 60, // 60 mins
+  });
   const players = await getCachedPlayers({ format, ppr });
 
   const selectedPlayerIds: Player["id"][] = pids
@@ -70,23 +77,26 @@ export default async function Page({ searchParams }: IProps) {
   const selectedPlayers = selectedPlayerIds
     .map((pId) => players.find((p) => p.id === pId))
     .filter((p) => p !== undefined);
+  const selectedPlayersValue = selectedPlayers
+    .map((p) => p.value)
+    .reduce((a, b) => a + b, 0);
 
   return (
     <div>
       <h1>Fantasy Football Trader</h1>
-      <h2>Enter league details:</h2>
+      <h2>League settings:</h2>
       <Form action="">
         <fieldset>
           <legend>Format:</legend>
 
           <div>
-            <input type="radio" id="redraft" name="format" value="redraft" />
-            <label htmlFor="redraft">Redraft</label>
+            <input type="radio" id="dynasty" name="format" value="dynasty" />
+            <label htmlFor="dynasty">Dynasty</label>
           </div>
 
           <div>
-            <input type="radio" id="dynasty" name="format" value="dynasty" />
-            <label htmlFor="dynasty">Dynasty</label>
+            <input type="radio" id="redraft" name="format" value="redraft" />
+            <label htmlFor="redraft">Redraft</label>
           </div>
         </fieldset>
 
@@ -116,7 +126,9 @@ export default async function Page({ searchParams }: IProps) {
       {selectedPlayers && (
         <>
           <h2>Selected players</h2>
+
           <ul>
+            <li>Total value: {selectedPlayersValue}</li>
             {selectedPlayers.map((p) => (
               <li key={p.id}>
                 <div>
@@ -143,9 +155,15 @@ export default async function Page({ searchParams }: IProps) {
       )}
 
       <h2>Player rankings</h2>
-      <ul>
+      {/* <ul>
         {players.map((p) => (
           <li key={p.id}>
+            <Image
+              alt={p.headshot.alt}
+              src={p.headshot.src}
+              width={60}
+              height={60}
+            />
             <div>
               {p.overallRank} {p.position}
               {p.positionRank} {p.name}
@@ -162,43 +180,13 @@ export default async function Page({ searchParams }: IProps) {
             )}
           </li>
         ))}
+      </ul> */}
+      {/* DEBUG */}
+      <ul>
+        {players.map((p) => (
+          <li key={p.id}>{JSON.stringify(p)}</li>
+        ))}
       </ul>
     </div>
   );
 }
-
-// {
-//   player: {
-//     id: 7257,
-//     name: 'Saquon Barkley',
-//     mflId: '13604',
-//     sleeperId: '4866',
-//     position: 'RB',
-//     maybeBirthday: '1997-02-09',
-//     maybeHeight: '72',
-//     maybeWeight: 233,
-//     maybeCollege: 'Penn State',
-//     maybeTeam: 'PHI',
-//     maybeAge: 27.7,
-//     maybeYoe: 6,
-//     espnId: '3929630',
-//     fleaflickerId: '13778'
-//   },
-//   value: 10660,
-//   overallRank: 1,
-//   positionRank: 1,
-//   trend30Day: 3667,
-//   redraftDynastyValueDifference: 29,
-//   redraftDynastyValuePercDifference: 0,
-//   redraftValue: 10689,
-//   combinedValue: 21349,
-//   maybeMovingStandardDeviation: -3,
-//   maybeMovingStandardDeviationPerc: 0,
-//   maybeMovingStandardDeviationAdjusted: 2,
-//   displayTrend: false,
-//   maybeOwner: null,
-//   starter: false,
-//   maybeTier: 1,
-//   maybeAdp: null,
-//   maybeTradeFrequency: 0.013
-// }
