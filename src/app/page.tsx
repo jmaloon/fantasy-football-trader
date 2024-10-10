@@ -1,7 +1,9 @@
-import Form from "next/form";
-import Link from "next/link";
-import { unstable_cache } from "next/cache";
+// import Form from "next/form";
+// import Link from "next/link";
 // import Image from "next/image";
+import { unstable_cache } from "next/cache";
+
+import Select from "./Select";
 
 type Format = "redraft" | "dynasty";
 type PPR = "0" | "0.5" | "1";
@@ -82,10 +84,30 @@ export default async function Page({ searchParams }: IProps) {
     .reduce((a, b) => a + b, 0);
 
   return (
-    <div>
-      <h1>Fantasy Football Trader</h1>
-      <h2>League settings:</h2>
-      <Form action="">
+    <div className="grid place-items-center min-h-screen">
+      <main>
+        <h1>Fantasy Football Trader</h1>
+        <h2>League settings</h2>
+        <div className="flex gap-2 items-center">
+          <Select className="w-20">
+            <option value="1">1QB</option>
+            <option value="2">2QB</option>
+          </Select>
+          <Select className="w-28">
+            <option value="dynasty">Dynasty</option>
+            <option value="redraft">Redraft</option>
+          </Select>
+          <p>league with</p>
+          <Select className="w-16">
+            <option value="0">0</option>
+            <option value="0.5">0.5</option>
+            <option value="1">1</option>
+          </Select>
+          <p>PPR.</p>
+        </div>
+      </main>
+      {/* <h2>League settings:</h2> */}
+      {/* <Form action="">
         <fieldset>
           <legend>Format:</legend>
 
@@ -121,9 +143,9 @@ export default async function Page({ searchParams }: IProps) {
           <input type="text" name="pids" value={pids || ""} readOnly />
         </div>
         <button>Submit</button>
-      </Form>
+      </Form> */}
 
-      {selectedPlayers && (
+      {/* {selectedPlayers && (
         <>
           <h2>Selected players</h2>
 
@@ -152,9 +174,9 @@ export default async function Page({ searchParams }: IProps) {
             ))}
           </ul>
         </>
-      )}
+      )} */}
 
-      <h2>Player rankings</h2>
+      {/* <h2>Player rankings</h2> */}
       {/* <ul>
         {players.map((p) => (
           <li key={p.id}>
@@ -182,11 +204,11 @@ export default async function Page({ searchParams }: IProps) {
         ))}
       </ul> */}
       {/* DEBUG */}
-      <ul>
+      {/* <ul>
         {players.map((p) => (
           <li key={p.id}>{JSON.stringify(p)}</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
