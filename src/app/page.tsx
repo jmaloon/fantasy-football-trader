@@ -4,14 +4,13 @@
 import { unstable_cache } from "next/cache";
 
 import Settings from "./Settings";
-
-type Format = "redraft" | "dynasty";
-type PPR = "0" | "0.5" | "1";
+import { Format, NumQBs, PPR } from "./types";
 
 interface IProps {
   searchParams: Promise<{
     format: Format;
     ppr: PPR;
+    numQbs: NumQBs;
     pids: string; // player IDs as comma-separated string
   }>;
 }
@@ -45,33 +44,40 @@ const REQUEST_URL = "https://api.fantasycalc.com/values/current";
 async function getPlayers({
   format,
   ppr,
+  numQbs,
 }: {
-  format: Format | undefined;
-  ppr: PPR | undefined;
+  format: Format;
+  ppr: PPR;
+  numQbs: NumQBs;
 }): Promise<Player[]> {
-  const isMissingData = ppr === undefined || format === undefined;
-  if (isMissingData) return [];
-
-  // TODO: validate data
-
   const urlSearchParams = new URLSearchParams({
     isDynasty: Boolean(format === "dynasty").toString(),
-    numQbs: "1",
+    numQbs,
     ppr,
   }).toString();
 
-  const response = await fetch(`${REQUEST_URL}?${urlSearchParams}`);
-  const data = await response.json();
-  return data.map((r: any) => deserializePlayer(r));
+  try {
+    const response = await fetch(`${REQUEST_URL}?${urlSearchParams}`);
+    const data = await response.json();
+    return data.map((r: any) => deserializePlayer(r));
+  } catch (error: unknown) {
+    console.error(error);
+    return [];
+  }
 }
 
 export default async function Page({ searchParams }: IProps) {
-  const { format = "dynasty", ppr = "0", pids } = await searchParams;
+  const {
+    format = "dynasty",
+    ppr = "0",
+    numQbs = "1",
+    pids,
+  } = await searchParams;
 
   const getCachedPlayers = unstable_cache(getPlayers, [format, ppr], {
     revalidate: 60 * 60, // 60 mins
   });
-  const players = await getCachedPlayers({ format, ppr });
+  const players = await getCachedPlayers({ format, ppr, numQbs });
 
   const selectedPlayerIds: Player["id"][] = pids
     ? pids.split(",").map(Number)
@@ -88,7 +94,7 @@ export default async function Page({ searchParams }: IProps) {
       <main>
         <h1>Fantasy Football Trader</h1>
         <h2>League settings</h2>
-        <Settings />
+        <Settings format={format} ppr={ppr} numQbs={numQbs} />
       </main>
       {/* <h2>League settings:</h2> */}
       {/* <Form action="">
