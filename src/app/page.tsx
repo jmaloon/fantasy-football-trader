@@ -3,7 +3,7 @@
 // import Image from "next/image";
 import { unstable_cache } from "next/cache";
 
-import Select from "./Select";
+import Settings from "./Settings";
 
 type Format = "redraft" | "dynasty";
 type PPR = "0" | "0.5" | "1";
@@ -88,23 +88,7 @@ export default async function Page({ searchParams }: IProps) {
       <main>
         <h1>Fantasy Football Trader</h1>
         <h2>League settings</h2>
-        <div className="flex gap-2 items-center">
-          <Select className="w-20">
-            <option value="1">1QB</option>
-            <option value="2">2QB</option>
-          </Select>
-          <Select className="w-28">
-            <option value="dynasty">Dynasty</option>
-            <option value="redraft">Redraft</option>
-          </Select>
-          <p>league with</p>
-          <Select className="w-16">
-            <option value="0">0</option>
-            <option value="0.5">0.5</option>
-            <option value="1">1</option>
-          </Select>
-          <p>PPR.</p>
-        </div>
+        <Settings />
       </main>
       {/* <h2>League settings:</h2> */}
       {/* <Form action="">

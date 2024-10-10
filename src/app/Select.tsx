@@ -11,9 +11,14 @@ import { ReactNode } from "react";
 interface IProps {
   children: ReactNode;
   className: string;
+  onChange: (value: string) => void;
 }
 
-export default function HeadlessUISelect({ children, ...rest }: IProps) {
+export default function HeadlessUISelect({
+  children,
+  onChange,
+  ...rest
+}: IProps) {
   return (
     <div {...rest}>
       <Field>
@@ -25,6 +30,7 @@ export default function HeadlessUISelect({ children, ...rest }: IProps) {
               // Make the text of each option black on Windows
               "*:text-black"
             )}
+            onChange={(e) => onChange(e.target.value)}
           >
             {children}
           </HeadlessUiSelect>
