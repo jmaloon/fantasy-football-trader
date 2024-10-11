@@ -29,11 +29,11 @@ export default async function Page({ searchParams }: IProps) {
   return (
     <div className="grid place-items-center min-h-screen">
       <main>
-        <h1 className="text-3xl">Fantasy Football Trader</h1>
-        <h2 className="mt-6 text-xl">League settings</h2>
+        <h1 className="text-3xl">Fantasy Football Trade Advisor</h1>
+        <h2 className="mt-6 mb-2 text-lg text-white/80">League settings</h2>
         <LeagueSettings format={format} ppr={ppr} numQbs={numQbs} />
 
-        <h2 className="mt-6 text-xl">Trade settings</h2>
+        <h2 className="mt-8 mb-2 text-lg text-white/80">Trade settings</h2>
         <TradeSettings
           players={players}
           selectedPlayerIds={selectedPlayerIds}
