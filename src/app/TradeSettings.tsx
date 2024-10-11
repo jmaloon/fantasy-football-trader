@@ -4,14 +4,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 import PlayerCombobox from "./PlayerCombobox";
+import Select from "./Select";
 
-import { Player, TradeSettings as TradeSettingsType } from "./types";
+import { Player, POSITIONS, TradeSettings as TradeSettingsType } from "./types";
 
 interface IProps extends TradeSettingsType {
   players: Player[];
 }
 
-export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
+export default function TradeSettings({
+  players,
+  selectedPlayerIds,
+  position,
+}: IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -19,21 +24,22 @@ export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
     .map((playerId) => players.find((p) => p.id === playerId))
     .filter((p) => !!p); // type narrowing
 
-  function updateSelectedPlayerIds(playerIds: Player["id"][]) {
+  function updateSearchParams(key: string, value: string) {
     const nextUrlSearchParams = new URLSearchParams(searchParams);
-    nextUrlSearchParams.set("playerIds", playerIds.join(","));
+    nextUrlSearchParams.set(key, value);
 
     router.replace(`/?${nextUrlSearchParams}`);
   }
 
+  function updateSelectedPlayerIds(playerIds: Player["id"][]) {
+    updateSearchParams("playerIds", playerIds.join(","));
+  }
+
   function removeSelectedPlayerId(playerId: Player["id"]) {
-    const nextUrlSearchParams = new URLSearchParams(searchParams);
     const nextSelectedPlayerIds = selectedPlayerIds.filter(
       (pid) => pid !== playerId
     );
-    nextUrlSearchParams.set("playerIds", nextSelectedPlayerIds.join(","));
-
-    router.replace(`/?${nextUrlSearchParams}`);
+    updateSelectedPlayerIds(nextSelectedPlayerIds);
   }
 
   return (
@@ -62,6 +68,18 @@ export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
         />
       </div>
       <p>and in return receive a</p>
+      <div className="w-20">
+        <Select
+          onChange={(value) => updateSearchParams("position", value)}
+          value={position}
+        >
+          {POSITIONS.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </Select>
+      </div>
     </div>
   );
 }

@@ -4,10 +4,16 @@ import LeagueSettings from "./LeagueSettings";
 import TradeSettings from "./TradeSettings";
 
 import { getPlayers } from "./data";
-import { Player, LeagueSettings as LeagueSettingsType } from "./types";
+import {
+  Player,
+  LeagueSettings as LeagueSettingsType,
+  Position,
+} from "./types";
 
 interface IProps {
-  searchParams: Promise<LeagueSettingsType & { playerIds: string }>;
+  searchParams: Promise<
+    LeagueSettingsType & { playerIds: string; position: Position }
+  >;
 }
 
 export default async function Page({ searchParams }: IProps) {
@@ -16,6 +22,7 @@ export default async function Page({ searchParams }: IProps) {
     ppr = "0",
     numQbs = "1",
     playerIds = "",
+    position = "QB",
   } = await searchParams;
   const selectedPlayerIds: Player["id"][] = playerIds
     ? playerIds.split(",").map(Number)
@@ -37,6 +44,7 @@ export default async function Page({ searchParams }: IProps) {
         <TradeSettings
           players={players}
           selectedPlayerIds={selectedPlayerIds}
+          position={position}
         />
       </main>
 

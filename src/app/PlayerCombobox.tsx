@@ -23,15 +23,13 @@ export default function PlayerCombobox({
 }: IProps) {
   const [query, setQuery] = useState("");
 
-  const filteredPlayers =
+  const filteredPlayers = (
     query === ""
-      ? players.slice(0, 5)
-      : players
-          .filter((player) =>
-            player.name.toLowerCase().includes(query.toLowerCase())
-          )
-          .slice(0, 5);
-
+      ? players
+      : players.filter((player) =>
+          player.name.toLowerCase().includes(query.toLowerCase())
+        )
+  ).slice(0, 8);
   return (
     <Combobox
       multiple
