@@ -1,26 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Select from "./Select";
-import { Format, NumQBs, PPR } from "./types";
+import { LeagueSettings as LeagueSettingsType } from "./types";
 
-interface IProps {
-  format: Format;
-  numQbs: NumQBs;
-  ppr: PPR;
-}
-
-export default function Settings({ format, numQbs, ppr }: IProps) {
+export default function LeagueSettings({
+  format,
+  numQbs,
+  ppr,
+}: LeagueSettingsType) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   function updateSearchParams(key: string, value: string) {
-    const nextUrlSearchParams = new URLSearchParams({
-      numQbs,
-      format,
-      ppr,
-      [key]: value,
-    });
+    const nextUrlSearchParams = new URLSearchParams(searchParams);
+    nextUrlSearchParams.set(key, value);
 
     router.replace(`/?${nextUrlSearchParams}`);
   }
