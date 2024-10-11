@@ -36,6 +36,7 @@ export default function PlayerCombobox({ players, onSelect }: IProps) {
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
           )}
           onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search for player to trade..."
         />
         <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
           <ChevronDownIcon className="size-4 fill-white/60 group-data-[hover]:fill-white" />

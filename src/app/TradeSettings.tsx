@@ -30,10 +30,15 @@ export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
   }
 
   return (
-    <div>
+    <div className="flex items-center gap-2">
       <p>I would like to trade away</p>
       {selectedPlayers.map((player) => (
-        <div key={player.id}>{player.name}</div>
+        <div
+          key={player.id}
+          className="rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white"
+        >
+          {player.name}
+        </div>
       ))}
       <PlayerCombobox players={players} onSelect={toggleSelectedPlayerIds} />
       <p>and in return receive a</p>
