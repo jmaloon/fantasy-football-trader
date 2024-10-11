@@ -18,13 +18,13 @@ export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
     .map((playerId) => players.find((p) => p.id === playerId))
     .filter((p) => !!p); // type narrowing
 
-  function toggleSelectedPlayerIds(playerId: Player["id"]) {
-    console.log("here");
+  function toggleSelectedPlayerIds(playerIds: Player["id"][]) {
     const nextUrlSearchParams = new URLSearchParams(searchParams);
-    const nextSelectedPlayerIds = selectedPlayerIds.includes(playerId)
-      ? selectedPlayerIds.filter((pid) => pid !== playerId)
-      : [...selectedPlayerIds, playerId];
-    nextUrlSearchParams.set("playerIds", nextSelectedPlayerIds.join(","));
+    // const nextSelectedPlayerIds = selectedPlayerIds.includes(playerId)
+    //   ? selectedPlayerIds.filter((pid) => pid !== playerId)
+    //   : [...selectedPlayerIds, playerId];
+    // nextUrlSearchParams.set("playerIds", nextSelectedPlayerIds.join(","));
+    nextUrlSearchParams.set("playerIds", playerIds.join(","));
 
     router.replace(`/?${nextUrlSearchParams}`);
   }
@@ -40,7 +40,11 @@ export default function TradeSettings({ players, selectedPlayerIds }: IProps) {
           {player.name}
         </div>
       ))}
-      <PlayerCombobox players={players} onSelect={toggleSelectedPlayerIds} />
+      <PlayerCombobox
+        players={players}
+        onSelect={toggleSelectedPlayerIds}
+        selectedPlayerIds={selectedPlayerIds}
+      />
       <p>and in return receive a</p>
     </div>
   );

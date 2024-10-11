@@ -13,9 +13,14 @@ import { useState } from "react";
 import { Player } from "./types";
 interface IProps {
   players: Player[];
-  onSelect: (playerId: Player["id"]) => void;
+  selectedPlayerIds: Player["id"][];
+  onSelect: (playerId: Player["id"][]) => void;
 }
-export default function PlayerCombobox({ players, onSelect }: IProps) {
+export default function PlayerCombobox({
+  players,
+  selectedPlayerIds,
+  onSelect,
+}: IProps) {
   const [query, setQuery] = useState("");
 
   const filteredPlayers =
@@ -28,7 +33,12 @@ export default function PlayerCombobox({ players, onSelect }: IProps) {
           .slice(0, 5);
 
   return (
-    <Combobox onChange={onSelect} onClose={() => setQuery("")}>
+    <Combobox
+      multiple
+      value={selectedPlayerIds}
+      onChange={onSelect}
+      onClose={() => setQuery("")}
+    >
       <div className="relative">
         <ComboboxInput
           className={clsx(
