@@ -8,7 +8,7 @@ export type Position = (typeof POSITIONS)[number];
 export interface Player {
   id: number;
   name: string;
-  position: string;
+  position: Position;
   overallRank: number;
   positionRank: number;
   value: number;

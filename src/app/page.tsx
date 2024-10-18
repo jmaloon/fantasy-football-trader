@@ -9,6 +9,7 @@ import {
   LeagueSettings as LeagueSettingsType,
   Position,
 } from "./types";
+import getTradeTargets from "./getTradeTargets";
 
 interface IProps {
   searchParams: Promise<
@@ -33,6 +34,9 @@ export default async function Page({ searchParams }: IProps) {
   });
   const players = await getCachedPlayers({ format, ppr, numQbs });
 
+  const tradeTargets = getTradeTargets(players, selectedPlayerIds);
+
+  console.log(players.find((p) => p.id === 9632));
   return (
     <div className="grid place-items-center min-h-screen">
       <main>
@@ -46,14 +50,16 @@ export default async function Page({ searchParams }: IProps) {
           selectedPlayerIds={selectedPlayerIds}
           position={position}
         />
-      </main>
 
-      {/* DEBUG */}
-      {/* <ul>
-        {players.map((p) => (
-          <li key={p.id}>{JSON.stringify(p)}</li>
-        ))}
-      </ul> */}
+        <h2 className="mt-8 mb-2 text-lg text-white/80">Trade Targets</h2>
+        <ul>
+          {tradeTargets.map(({ player, percentValueDifference }) => (
+            <li key={player.id}>
+              {player.name} {percentValueDifference.toFixed(2)} %
+            </li>
+          ))}
+        </ul>
+      </main>
     </div>
   );
 }
