@@ -1,8 +1,8 @@
-import { LeagueSettings, Player } from "./types";
+import { LeagueSettings, Player, ResponseMessage } from "./types";
 
 const REQUEST_URL = "https://api.fantasycalc.com/values/current" as const;
 
-function deserializePlayer(message: any): Player {
+function deserializePlayer(message: ResponseMessage): Player {
   return {
     id: message.player.id,
     name: message.player.name,
@@ -30,8 +30,8 @@ export async function getPlayers({
 
   try {
     const response = await fetch(`${REQUEST_URL}?${urlSearchParams}`);
-    const data = await response.json();
-    return data.map((r: any) => deserializePlayer(r));
+    const data: ResponseMessage[] = await response.json();
+    return data.map((r) => deserializePlayer(r));
   } catch (error: unknown) {
     console.error(error);
     return [];

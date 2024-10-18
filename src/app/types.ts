@@ -25,3 +25,15 @@ export interface TradeSettings {
   // position: Position;
   selectedPlayerIds: Player["id"][];
 }
+
+export interface ResponseMessage {
+  player: {
+    id: number;
+    name: string;
+    position: Position;
+    espnId: string;
+  };
+  overallRank: number;
+  positionRank: number;
+  value: number;
+}
