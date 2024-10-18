@@ -4,9 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 import PlayerCombobox from "./PlayerCombobox";
-import Select from "./Select";
+// import Select from "./Select";
 
-import { Player, POSITIONS, TradeSettings as TradeSettingsType } from "./types";
+import {
+  Player,
+  // POSITIONS,
+  TradeSettings as TradeSettingsType,
+} from "./types";
 
 interface IProps extends TradeSettingsType {
   players: Player[];
@@ -15,8 +19,8 @@ interface IProps extends TradeSettingsType {
 export default function TradeSettings({
   players,
   selectedPlayerIds,
-  position,
-}: IProps) {
+}: // position,
+IProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -43,7 +47,7 @@ export default function TradeSettings({
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <p>I would like to trade away</p>
       {selectedPlayers.map((player) => (
         <div
@@ -67,7 +71,7 @@ export default function TradeSettings({
           selectedPlayerIds={selectedPlayerIds}
         />
       </div>
-      <p>and in return receive a</p>
+      {/* <p>and in return receive a</p>
       <div className="w-20">
         <Select
           onChange={(value) => updateSearchParams("position", value)}
@@ -79,7 +83,7 @@ export default function TradeSettings({
             </option>
           ))}
         </Select>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -7,13 +7,16 @@ import { getPlayers } from "./data";
 import {
   Player,
   LeagueSettings as LeagueSettingsType,
-  Position,
+  // Position,
 } from "./types";
 import getTradeTargets from "./getTradeTargets";
 
 interface IProps {
   searchParams: Promise<
-    LeagueSettingsType & { playerIds: string; position: Position }
+    LeagueSettingsType & {
+      playerIds: string;
+      // position: Position
+    }
   >;
 }
 
@@ -23,7 +26,7 @@ export default async function Page({ searchParams }: IProps) {
     ppr = "0",
     numQbs = "1",
     playerIds = "",
-    position = "QB",
+    // position = "QB",
   } = await searchParams;
   const selectedPlayerIds: Player["id"][] = playerIds
     ? playerIds.split(",").map(Number)
@@ -36,7 +39,6 @@ export default async function Page({ searchParams }: IProps) {
 
   const tradeTargets = getTradeTargets(players, selectedPlayerIds);
 
-  console.log(players.find((p) => p.id === 9632));
   return (
     <div className="grid place-items-center min-h-screen">
       <main>
@@ -48,7 +50,7 @@ export default async function Page({ searchParams }: IProps) {
         <TradeSettings
           players={players}
           selectedPlayerIds={selectedPlayerIds}
-          position={position}
+          // position={position}
         />
 
         <h2 className="mt-8 mb-2 text-lg text-white/80">Trade Targets</h2>

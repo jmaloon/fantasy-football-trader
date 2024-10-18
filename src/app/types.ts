@@ -22,6 +22,6 @@ export interface LeagueSettings {
 }
 
 export interface TradeSettings {
-  position: Position;
+  // position: Position;
   selectedPlayerIds: Player["id"][];
 }
