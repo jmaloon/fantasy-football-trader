@@ -21,7 +21,7 @@ export default function LeagueSettings({
   }
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex flex-wrap gap-2 items-center">
       <div className="w-20">
         <Select
           onChange={(value) => updateSearchParams("numQbs", value)}
@@ -41,17 +41,19 @@ export default function LeagueSettings({
         </Select>
       </div>
       <p>league with</p>
-      <div className="w-16">
-        <Select
-          onChange={(value) => updateSearchParams("ppr", value)}
-          value={ppr}
-        >
-          <option value="0">0</option>
-          <option value="0.5">0.5</option>
-          <option value="1">1</option>
-        </Select>
+      <div className="flex items-center gap-2">
+        <div className="w-16">
+          <Select
+            onChange={(value) => updateSearchParams("ppr", value)}
+            value={ppr}
+          >
+            <option value="0">0</option>
+            <option value="0.5">0.5</option>
+            <option value="1">1</option>
+          </Select>
+        </div>
+        <p>PPR.</p>
       </div>
-      <p>PPR.</p>
     </div>
   );
 }
