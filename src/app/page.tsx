@@ -40,8 +40,8 @@ export default async function Page({ searchParams }: IProps) {
   const tradeTargets = getTradeTargets(players, selectedPlayerIds);
 
   return (
-    <div className="grid place-items-center min-h-screen">
-      <main>
+    <div className="grid place-items-center min-h-screen p-4">
+      <main className="max-w-lg w-full">
         <h1 className="text-3xl">Fantasy Football Trade Advisor</h1>
         <h2 className="mt-6 mb-2 text-lg text-white/80">League settings</h2>
         <LeagueSettings format={format} ppr={ppr} numQbs={numQbs} />
