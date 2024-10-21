@@ -1,4 +1,5 @@
 import { unstable_cache } from "next/cache";
+import Image from "next/image";
 
 import LeagueSettings from "./LeagueSettings";
 import TradeSettings from "./TradeSettings";
@@ -62,10 +63,33 @@ export default async function Page({ searchParams }: IProps) {
             trade targets.
           </p>
         ) : (
-          <ul>
+          <ul className="flex flex-col gap-2">
             {tradeTargets.map(({ player, percentValueDifference }) => (
-              <li key={player.id}>
-                {player.name} {percentValueDifference.toFixed(2)} %
+              <li
+                key={player.id}
+                className="flex items-start p-2 border rounded-lg"
+              >
+                <Image
+                  width={64} // original 128
+                  height={47} // original 93
+                  src={player.headshot.src}
+                  alt={player.headshot.alt}
+                />
+                <div>
+                  <h3>{player.name}</h3>
+                  <p className="text-xs">
+                    Trade value difference of{" "}
+                    <span
+                      className={
+                        percentValueDifference < 0
+                          ? "text-red-400"
+                          : "text-green-400"
+                      }
+                    >
+                      {percentValueDifference.toFixed(2)} %
+                    </span>
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
