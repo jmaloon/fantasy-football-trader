@@ -39,8 +39,10 @@ export default async function Page({ searchParams }: IProps) {
 
   const tradeTargets = getTradeTargets(players, selectedPlayerIds);
 
+  const hasNoSelectedPlayers = selectedPlayerIds.length === 0;
+
   return (
-    <div className="grid place-items-center min-h-screen p-4">
+    <div className="flex justify-center min-h-screen pt-12 p-4">
       <main className="max-w-lg w-full">
         <h1 className="text-3xl">Fantasy Football Trade Advisor</h1>
         <h2 className="mt-6 mb-2 text-lg text-white/80">League settings</h2>
@@ -54,13 +56,20 @@ export default async function Page({ searchParams }: IProps) {
         />
 
         <h2 className="mt-8 mb-2 text-lg text-white/80">Trade Targets</h2>
-        <ul>
-          {tradeTargets.map(({ player, percentValueDifference }) => (
-            <li key={player.id}>
-              {player.name} {percentValueDifference.toFixed(2)} %
-            </li>
-          ))}
-        </ul>
+        {hasNoSelectedPlayers ? (
+          <p className="text-sm text-slate-50/50">
+            Add a player using the <q>Trade settings</q> input to see potential
+            trade targets.
+          </p>
+        ) : (
+          <ul>
+            {tradeTargets.map(({ player, percentValueDifference }) => (
+              <li key={player.id}>
+                {player.name} {percentValueDifference.toFixed(2)} %
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
     </div>
   );

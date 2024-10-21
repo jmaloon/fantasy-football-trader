@@ -30,6 +30,7 @@ export default function PlayerCombobox({
           player.name.toLowerCase().includes(query.toLowerCase())
         )
   ).slice(0, 8);
+
   return (
     <Combobox
       multiple
