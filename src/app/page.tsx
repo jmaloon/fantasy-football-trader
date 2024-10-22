@@ -46,7 +46,7 @@ export default async function Page({ searchParams }: IProps) {
   return (
     <div
       className={clsx(
-        "flex justify-center min-h-screen pt-12 p-4",
+        "flex justify-center min-h-screen py-12 px-4",
         "bg-slate-200",
         "dark:bg-slate-900"
       )}
