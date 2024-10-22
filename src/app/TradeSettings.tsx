@@ -11,6 +11,7 @@ import {
   // POSITIONS,
   TradeSettings as TradeSettingsType,
 } from "./types";
+import clsx from "clsx";
 
 interface IProps extends TradeSettingsType {
   players: Player[];
@@ -48,19 +49,29 @@ IProps) {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <p>I would like to trade away</p>
+      <p className="text-slate-900 dark:text-slate-100">
+        I would like to trade away
+      </p>
       {selectedPlayers.map((player) => (
         <div
           key={player.id}
-          className="flex gap-1 rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white"
+          className={clsx(
+            "flex gap-1.5 rounded-lg border-none py-1.5 px-3 text-sm/6",
+            "bg-slate-100 text-slate-900",
+            "dark:bg-slate-800 dark:text-slate-100"
+          )}
         >
           {player.name}
           <button
-            className="rounded p-1 text-center transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            className={clsx(
+              "rounded p-1 text-center transition-all",
+              "focus:bg-slate-300 active:bg-slate-300 hover:bg-slate-300",
+              "dark:focus:bg-slate-700 dark:active:bg-slate-700 dark:hover:bg-slate-700"
+            )}
             type="button"
             onClick={() => removeSelectedPlayerId(player.id)}
           >
-            <XMarkIcon className="size-4 text-white" />
+            <XMarkIcon className="size-4 dark:text-white" />
           </button>
         </div>
       ))}

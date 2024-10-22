@@ -40,7 +40,7 @@ export default function LeagueSettings({
           <option value="redraft">Redraft</option>
         </Select>
       </div>
-      <p>league with</p>
+      <p className="text-slate-900 dark:text-slate-100">league with</p>
       <div className="flex items-center gap-2">
         <div className="w-16">
           <Select
@@ -52,7 +52,7 @@ export default function LeagueSettings({
             <option value="1">1</option>
           </Select>
         </div>
-        <p>PPR.</p>
+        <p className="text-slate-900 dark:text-slate-100">PPR.</p>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { unstable_cache } from "next/cache";
 import Image from "next/image";
 
@@ -43,22 +44,34 @@ export default async function Page({ searchParams }: IProps) {
   const hasNoSelectedPlayers = selectedPlayerIds.length === 0;
 
   return (
-    <div className="flex justify-center min-h-screen pt-12 p-4">
+    <div
+      className={clsx(
+        "flex justify-center min-h-screen pt-12 p-4",
+        "bg-slate-200",
+        "dark:bg-slate-900"
+      )}
+    >
       <main className="max-w-lg w-full">
-        <h1 className="text-3xl">Fantasy Football Trade Advisor</h1>
-        <h2 className="mt-6 mb-2 text-lg text-white/80">League settings</h2>
+        <h1 className="text-3xl text-slate-900 dark:text-slate-100">
+          Fantasy Football Trade Advisor
+        </h1>
+        <h2 className="mt-6 mb-2 text-lg text-slate-700 dark:text-slate-200">
+          League settings
+        </h2>
         <LeagueSettings format={format} ppr={ppr} numQbs={numQbs} />
 
-        <h2 className="mt-8 mb-2 text-lg text-white/80">Trade settings</h2>
+        <h2 className="mt-8 mb-2 text-lg text-slate-700 dark:text-slate-200">
+          Trade settings
+        </h2>
         <TradeSettings
           players={players}
           selectedPlayerIds={selectedPlayerIds}
           // position={position}
         />
 
-        <h2 className="mt-8 mb-2 text-lg text-white/80">Trade Targets</h2>
+        <h2 className="mt-8 mb-2 text-lg dark:text-slate-200">Trade targets</h2>
         {hasNoSelectedPlayers ? (
-          <p className="text-sm text-slate-50/50">
+          <p className="text-sm dark:text-slate-400">
             Add a player using the <q>Trade settings</q> input to see potential
             trade targets.
           </p>
@@ -67,7 +80,10 @@ export default async function Page({ searchParams }: IProps) {
             {tradeTargets.map(({ player, percentValueDifference }) => (
               <li
                 key={player.id}
-                className="flex items-start p-2 border rounded-lg"
+                className={clsx(
+                  "flex items-start p-2 rounded-lg",
+                  "bg-slate-100 dark:bg-slate-800"
+                )}
               >
                 <Image
                   width={64} // original 128
@@ -76,14 +92,14 @@ export default async function Page({ searchParams }: IProps) {
                   alt={player.headshot.alt}
                 />
                 <div>
-                  <h3>{player.name}</h3>
-                  <p className="text-xs">
+                  <h3 className="dark:text-slate-100">{player.name}</h3>
+                  <p className="text-xs dark:text-slate-100">
                     Trade value difference of{" "}
                     <span
                       className={
                         percentValueDifference < 0
-                          ? "text-red-400"
-                          : "text-green-400"
+                          ? "text-red-700 dark:text-red-400"
+                          : "text-green-700 dark:text-green-400"
                       }
                     >
                       {percentValueDifference.toFixed(2)} %

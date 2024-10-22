@@ -19,7 +19,9 @@ export default function HeadlessUISelect({
       <div className="relative">
         <HeadlessUiSelect
           className={clsx(
-            "block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+            "block w-full appearance-none rounded-lg border-none py-1.5 px-3 text-sm/6",
+            "bg-slate-100",
+            "dark:bg-white/5 dark:text-white",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
             // Make the text of each option black on Windows
             "*:text-black"
@@ -30,7 +32,11 @@ export default function HeadlessUISelect({
           {children}
         </HeadlessUiSelect>
         <ChevronDownIcon
-          className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60"
+          className={clsx(
+            "group pointer-events-none absolute top-2.5 right-2.5 size-4",
+            "fill-slate-700",
+            "dark:fill-white/60"
+          )}
           aria-hidden="true"
         />
       </div>
