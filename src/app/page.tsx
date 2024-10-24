@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import LeagueSettings from "./LeagueSettings";
 import TradeSettings from "./TradeSettings";
+import ThemeSwitch from "./ThemeSwitch";
 
 import { getPlayers } from "./data";
 import {
@@ -55,6 +56,7 @@ export default async function Page({ searchParams }: IProps) {
         <h1 className="text-3xl text-slate-900 dark:text-slate-100">
           Fantasy Football Trade Advisor
         </h1>
+        <ThemeSwitch />
         <h2 className="mt-6 mb-2 text-lg text-slate-700 dark:text-slate-200">
           League settings
         </h2>

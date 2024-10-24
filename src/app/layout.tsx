@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script id="theme">
+          {`document.documentElement.classList.toggle('dark',
+        localStorage.theme === 'dark' || (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches))`}
+        </Script>
         {children}
       </body>
     </html>
