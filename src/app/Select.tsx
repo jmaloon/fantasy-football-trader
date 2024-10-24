@@ -20,7 +20,7 @@ export default function HeadlessUISelect({
         <HeadlessUiSelect
           className={clsx(
             "block w-full appearance-none rounded-lg border-none py-1.5 px-3 text-sm/6",
-            "bg-slate-100",
+            "bg-slate-50",
             "dark:bg-white/5 dark:text-white",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
             // Make the text of each option black on Windows

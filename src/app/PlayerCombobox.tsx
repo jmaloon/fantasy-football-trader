@@ -43,8 +43,8 @@ export default function PlayerCombobox({
           className={clsx(
             "w-full rounded-lg border-none py-1.5 pr-8 pl-3 text-sm/6",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-            "bg-slate-100 text-slate-900 placeholder:text-slate-700 dark:placeholder:text-slate-400",
-            "dark:bg-slate-800 dark:text-white"
+            "bg-slate-50 text-slate-900 placeholder:text-slate-700",
+            "dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-400"
           )}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search for player to trade..."
@@ -59,7 +59,8 @@ export default function PlayerCombobox({
         transition
         className={clsx(
           "w-[var(--input-width)] rounded-xl p-1 [--anchor-gap:8px] empty:invisible",
-          "bg-slate-100 dark:bg-slate-900",
+          "bg-white border",
+          "dark:bg-slate-700 dark:border-slate-500",
           "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0"
         )}
       >
@@ -67,7 +68,10 @@ export default function PlayerCombobox({
           <ComboboxOption
             key={player.id}
             value={player.id}
-            className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-slate-200 dark:data-[focus]:bg-white/10"
+            className={clsx(
+              "group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-slate-100",
+              "dark:data-[focus]:bg-slate-600"
+            )}
           >
             <CheckIcon className="invisible size-4 dark:fill-white group-data-[selected]:visible" />
             <div className="dark:text-sm/6 dark:text-white">{player.name}</div>

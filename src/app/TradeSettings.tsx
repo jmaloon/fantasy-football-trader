@@ -57,7 +57,7 @@ IProps) {
           key={player.id}
           className={clsx(
             "flex gap-1.5 rounded-lg border-none py-1.5 px-3 text-sm/6",
-            "bg-slate-100 text-slate-900",
+            "bg-slate-50 text-slate-900",
             "dark:bg-slate-800 dark:text-slate-100"
           )}
         >

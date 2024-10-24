@@ -81,8 +81,9 @@ export default async function Page({ searchParams }: IProps) {
               <li
                 key={player.id}
                 className={clsx(
-                  "flex items-start p-2 rounded-lg",
-                  "bg-slate-100 dark:bg-slate-800"
+                  "flex items-start p-2 border rounded-lg",
+                  "bg-slate-50 border-slate-300",
+                  "dark:bg-slate-800 dark:border-slate-600"
                 )}
               >
                 <Image
