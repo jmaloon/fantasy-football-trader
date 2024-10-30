@@ -53,10 +53,12 @@ export default async function Page({ searchParams }: IProps) {
       )}
     >
       <main className="max-w-lg w-full">
-        <h1 className="text-3xl text-slate-900 dark:text-slate-100">
-          Fantasy Football Trade Advisor
-        </h1>
-        <ThemeSwitch />
+        <div className="flex flex-col gap-2">
+          <h1 className="font-bold text-2xl text-slate-900 dark:text-slate-100">
+            Fantasy Football Trade Advisor
+          </h1>
+          <ThemeSwitch />
+        </div>
         <h2 className="mt-6 mb-2 text-lg text-slate-700 dark:text-slate-200">
           League settings
         </h2>
