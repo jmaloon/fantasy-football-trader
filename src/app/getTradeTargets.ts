@@ -1,13 +1,4 @@
-import { Player } from "./types";
-
-interface TradeTarget {
-  player: Player;
-  valueDifference: {
-    percent: number;
-    absolutePercent: number;
-    isPositive: boolean;
-  };
-}
+import { Player, TradeTarget } from "./types";
 
 export default function getTradeTargets(
   players: Player[],

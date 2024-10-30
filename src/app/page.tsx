@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { unstable_cache } from "next/cache";
-import Image from "next/image";
 
 import LeagueSettings from "./LeagueSettings";
 import TradeSettings from "./TradeSettings";
 import ThemeSwitch from "./ThemeSwitch";
+import TradeTargetCard from "./TradeTargetCard";
 
 import { getPlayers } from "./data";
 import {
@@ -81,34 +81,8 @@ export default async function Page({ searchParams }: IProps) {
           </p>
         ) : (
           <ul className="flex flex-col gap-2">
-            {tradeTargets.map(({ player, valueDifference }) => (
-              <li
-                key={player.id}
-                className={clsx(
-                  "flex items-center p-2 pr-4 gap-2 border rounded-lg",
-                  "bg-slate-50 border-slate-300",
-                  "dark:bg-slate-800 dark:border-slate-600"
-                )}
-              >
-                <Image
-                  width={43} // original 128
-                  height={31} // original 93
-                  src={player.headshot.src}
-                  alt={player.headshot.alt}
-                />
-                <div className="grow">
-                  <h3 className="dark:text-slate-100">{player.name}</h3>
-                </div>
-                <span
-                  className={
-                    valueDifference.isPositive
-                      ? "text-green-700 dark:text-green-400"
-                      : "text-red-700 dark:text-red-400"
-                  }
-                >{`${
-                  valueDifference.isPositive ? "" : "- "
-                }${valueDifference.absolutePercent.toFixed(2)} %`}</span>
-              </li>
+            {tradeTargets.map((tt) => (
+              <TradeTargetCard key={tt.player.id} tradeTarget={tt} />
             ))}
           </ul>
         )}

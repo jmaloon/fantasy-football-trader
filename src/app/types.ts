@@ -37,3 +37,12 @@ export interface ResponseMessage {
   positionRank: number;
   value: number;
 }
+
+export interface TradeTarget {
+  player: Player;
+  valueDifference: {
+    percent: number;
+    absolutePercent: number;
+    isPositive: boolean;
+  };
+}
