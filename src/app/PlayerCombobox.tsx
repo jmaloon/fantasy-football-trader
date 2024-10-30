@@ -49,7 +49,7 @@ export default function PlayerCombobox({
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search for player to trade..."
         />
-        <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
+        <ComboboxButton className="group absolute inset-y-0 right-0 px-3">
           <ChevronDownIcon className="size-4 fill-slate-900 group-data-[hover]:fill-slate-900 dark:fill-slate-400 dark:group-data-[hover]:fill-white" />
         </ComboboxButton>
       </div>
