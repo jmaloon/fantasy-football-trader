@@ -1,9 +1,18 @@
 import { Player } from "./types";
 
+interface TradeTarget {
+  player: Player;
+  valueDifference: {
+    percent: number;
+    absolutePercent: number;
+    isPositive: boolean;
+  };
+}
+
 export default function getTradeTargets(
   players: Player[],
   selectedPlayerIds: Player["id"][]
-): Array<{ player: Player; percentValueDifference: number }> {
+): Array<TradeTarget> {
   if (selectedPlayerIds.length === 0) return [];
 
   const selectedPlayers = selectedPlayerIds
@@ -26,15 +35,22 @@ export default function getTradeTargets(
   });
 
   return unselectedPlayers
-    .map((player) => ({
-      player,
-      percentValueDifference: percentValueDifferenceByPlayerId[player.id],
-    }))
-    .filter(
-      ({ percentValueDifference }) => Math.abs(percentValueDifference) < 21
+    .map(
+      (player): TradeTarget => ({
+        player,
+        valueDifference: {
+          percent: percentValueDifferenceByPlayerId[player.id],
+          absolutePercent: Math.abs(
+            percentValueDifferenceByPlayerId[player.id]
+          ),
+          isPositive: percentValueDifferenceByPlayerId[player.id] >= 0,
+        },
+      })
     )
+    .filter((tt) => tt.valueDifference.absolutePercent < 21)
     .sort(
-      (a, b) =>
-        Math.abs(a.percentValueDifference) - Math.abs(b.percentValueDifference)
+      (tt1, tt2) =>
+        Math.abs(tt1.valueDifference.percent) -
+        Math.abs(tt2.valueDifference.percent)
     );
 }
