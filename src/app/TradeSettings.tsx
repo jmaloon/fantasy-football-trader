@@ -52,6 +52,13 @@ IProps) {
       <p className="text-slate-900 dark:text-slate-100">
         I would like to trade away
       </p>
+      <div className="w-full sm:w-56">
+        <PlayerCombobox
+          players={players}
+          onSelect={updateSelectedPlayerIds}
+          selectedPlayerIds={selectedPlayerIds}
+        />
+      </div>
       {selectedPlayers.map((player) => (
         <div
           key={player.id}
@@ -75,13 +82,6 @@ IProps) {
           </button>
         </div>
       ))}
-      <div className="w-full sm:w-56">
-        <PlayerCombobox
-          players={players}
-          onSelect={updateSelectedPlayerIds}
-          selectedPlayerIds={selectedPlayerIds}
-        />
-      </div>
       {/* <p>and in return receive a</p>
       <div className="w-20">
         <Select
