@@ -52,7 +52,7 @@ IProps) {
       <p className="text-slate-900 dark:text-slate-100">
         I would like to trade away
       </p>
-      <div className="w-full sm:w-56">
+      <div className="w-full sm:w-60">
         <PlayerCombobox
           players={players}
           onSelect={updateSelectedPlayerIds}
